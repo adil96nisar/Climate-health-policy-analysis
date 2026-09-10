@@ -1,0 +1,156 @@
+@prefix pac: <https://w3id.org/chpg-o/pac#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+<https://w3id.org/chpg-o/pac> a owl:Ontology ;
+  dcterms:title "Policy Assessment Core (PAC)" ;
+  dcterms:description "Domain-general core for evidence-aware, traceable policy assessment. Climate-health concepts live in a separate extension." ;
+  dcterms:created "2026-09-06"^^xsd:date ;
+  owl:versionInfo "2.0.0-reviewer-ready" .
+
+### Domain-general classes
+pac:SourceDocument a owl:Class .
+pac:ObservationDocument a owl:Class ; rdfs:subClassOf pac:SourceDocument .
+pac:PolicyDocument a owl:Class ; rdfs:subClassOf pac:SourceDocument .
+pac:NormativeDocument a owl:Class ; rdfs:subClassOf pac:SourceDocument .
+pac:ScientificDocument a owl:Class ; rdfs:subClassOf pac:SourceDocument .
+pac:EvidenceClaim a owl:Class ; rdfs:subClassOf prov:Entity .
+pac:PolicyProblem a owl:Class .
+pac:PopulationGroup a owl:Class .
+pac:GeographicScope a owl:Class .
+pac:PolicyMeasure a owl:Class .
+pac:PolicyInstrument a owl:Class .
+pac:ResponsibleActor a owl:Class .
+pac:ImplementationMechanism a owl:Class .
+pac:MonitoringMechanism a owl:Class .
+pac:ResourceCommitment a owl:Class .
+pac:NormativeCriterion a owl:Class .
+pac:AssessmentCase a owl:Class ; rdfs:subClassOf prov:Entity .
+pac:EvidenceSearchScope a owl:Class ; rdfs:subClassOf prov:Entity .
+pac:Criterion a owl:Class .
+pac:CriterionAssessment a owl:Class ; rdfs:subClassOf prov:Entity .
+pac:CriterionStatus a owl:Class .
+pac:EvidenceSufficiency a owl:Class .
+pac:AssessmentDecision a owl:Class .
+pac:GapFinding a owl:Class ; rdfs:subClassOf prov:Entity .
+pac:GapType a owl:Class .
+pac:RuleDefinition a owl:Class ; rdfs:subClassOf prov:Plan .
+pac:RuleExecution a owl:Class ; rdfs:subClassOf prov:Activity .
+
+### Separation axioms: source roles are not silently conflated
+pac:ObservationDocument owl:disjointWith pac:PolicyDocument, pac:NormativeDocument .
+pac:PolicyDocument owl:disjointWith pac:NormativeDocument .
+pac:GapFinding owl:disjointWith pac:PolicyMeasure .
+pac:CriterionAssessment owl:disjointWith pac:Criterion .
+
+### Evidence/document properties
+pac:hasEvidenceClaim a owl:ObjectProperty ;
+  rdfs:domain pac:SourceDocument ; rdfs:range pac:EvidenceClaim ;
+  owl:inverseOf pac:extractedFrom .
+pac:extractedFrom a owl:ObjectProperty ;
+  rdfs:domain pac:EvidenceClaim ; rdfs:range pac:SourceDocument .
+pac:concernsProblem a owl:ObjectProperty ;
+  rdfs:domain pac:EvidenceClaim ; rdfs:range pac:PolicyProblem .
+pac:concernsPopulation a owl:ObjectProperty ;
+  rdfs:domain pac:EvidenceClaim ; rdfs:range pac:PopulationGroup .
+pac:concernsGeography a owl:ObjectProperty ;
+  rdfs:domain pac:EvidenceClaim ; rdfs:range pac:GeographicScope .
+pac:containsMeasure a owl:ObjectProperty ;
+  rdfs:domain pac:PolicyDocument ; rdfs:range pac:PolicyMeasure ;
+  owl:inverseOf pac:inPolicyDocument .
+pac:inPolicyDocument a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:PolicyDocument .
+pac:addressesProblem a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:PolicyProblem .
+pac:implementedBy a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:ResponsibleActor .
+pac:usesInstrument a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:PolicyInstrument .
+pac:hasImplementationMechanism a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:ImplementationMechanism .
+pac:hasMonitoringMechanism a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:MonitoringMechanism .
+pac:hasResourceCommitment a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:ResourceCommitment .
+pac:targetsPopulation a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:PopulationGroup .
+pac:targetsGeography a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:GeographicScope .
+pac:alignsWithNormativeCriterion a owl:ObjectProperty ; rdfs:domain pac:PolicyMeasure ; rdfs:range pac:NormativeCriterion .
+
+### Useful OWL property-chain entailments
+pac:documentAddressesProblem a owl:ObjectProperty ;
+  owl:propertyChainAxiom ( pac:containsMeasure pac:addressesProblem ) ;
+  rdfs:domain pac:PolicyDocument ; rdfs:range pac:PolicyProblem .
+pac:documentsProblem a owl:ObjectProperty ;
+  owl:propertyChainAxiom ( pac:hasEvidenceClaim pac:concernsProblem ) ;
+  rdfs:domain pac:SourceDocument ; rdfs:range pac:PolicyProblem .
+
+### Assessment structure
+pac:assessesProblem a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:PolicyProblem .
+pac:hasSearchScope a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:EvidenceSearchScope .
+pac:hasCriterionAssessment a owl:ObjectProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:CriterionAssessment .
+pac:assessesCriterion a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:CriterionAssessment ; rdfs:range pac:Criterion .
+pac:criterionStatus a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:CriterionAssessment ; rdfs:range pac:CriterionStatus .
+pac:supportedByClaim a owl:ObjectProperty ; rdfs:domain pac:CriterionAssessment ; rdfs:range pac:EvidenceClaim .
+pac:hasEvidenceSufficiency a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:EvidenceSufficiency .
+pac:assessmentDecision a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:AssessmentDecision .
+pac:hasGapFinding a owl:ObjectProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:GapFinding .
+pac:gapType a owl:ObjectProperty, owl:FunctionalProperty ; rdfs:domain pac:GapFinding ; rdfs:range pac:GapType .
+pac:triggeredByCriterionAssessment a owl:ObjectProperty ; rdfs:domain pac:GapFinding ; rdfs:range pac:CriterionAssessment .
+pac:appliedRule a owl:ObjectProperty ; rdfs:range pac:RuleDefinition .
+pac:decisionRule a owl:ObjectProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range pac:RuleDefinition .
+pac:assessedAgainstCriterion a owl:ObjectProperty ;
+  owl:propertyChainAxiom ( pac:hasCriterionAssessment pac:assessesCriterion ) ;
+  rdfs:domain pac:AssessmentCase ; rdfs:range pac:Criterion .
+
+### Search scope and provenance
+pac:includesSource a owl:ObjectProperty ; rdfs:domain pac:EvidenceSearchScope ; rdfs:range pac:SourceDocument .
+pac:generatedByRuleExecution a owl:ObjectProperty ; rdfs:domain pac:GapFinding ; rdfs:range pac:RuleExecution .
+pac:usedCriterionAssessment a owl:ObjectProperty ; rdfs:domain pac:RuleExecution ; rdfs:range pac:CriterionAssessment .
+pac:sourceIdentifier a owl:DatatypeProperty ; rdfs:domain pac:SourceDocument ; rdfs:range xsd:string .
+pac:sourceURI a owl:DatatypeProperty ; rdfs:domain pac:SourceDocument ; rdfs:range xsd:anyURI .
+pac:claimText a owl:DatatypeProperty ; rdfs:domain pac:EvidenceClaim ; rdfs:range xsd:string .
+pac:searchProtocol a owl:DatatypeProperty ; rdfs:domain pac:EvidenceSearchScope ; rdfs:range xsd:string .
+pac:scopeComplete a owl:DatatypeProperty, owl:FunctionalProperty ; rdfs:domain pac:EvidenceSearchScope ; rdfs:range xsd:boolean .
+pac:assessmentTimeframe a owl:DatatypeProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range xsd:string .
+pac:assessmentNote a owl:DatatypeProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range xsd:string .
+
+### Fixed criterion vocabulary. These are independent dimensions, not a single additive score.
+pac:ProblemRecognitionCriterion a pac:Criterion ; rdfs:label "P1 Problem recognition" .
+pac:ResponsibleActorCriterion a pac:Criterion ; rdfs:label "P2 Responsible actor / governance" .
+pac:PolicyInstrumentCriterion a pac:Criterion ; rdfs:label "P3 Policy instrument / action" .
+pac:ImplementationPathwayCriterion a pac:Criterion ; rdfs:label "P4 Implementation pathway" .
+pac:MonitoringOutcomeEvidenceCriterion a pac:Criterion ; rdfs:label "P5 Monitoring / outcome-evidence mechanism" .
+pac:ResourceFinancingCriterion a pac:Criterion ; rdfs:label "P6 Resources / financing" .
+pac:ScopeCoverageCriterion a pac:Criterion ; rdfs:label "P7 Scope coverage" .
+pac:EquityResponsivenessCriterion a pac:Criterion ; rdfs:label "P8 Equity / target-group responsiveness" .
+pac:NormativeAlignmentCriterion a pac:Criterion ; rdfs:label "P9 Normative alignment" .
+
+### Criterion status vocabulary. No bare 'Absent' status is used.
+pac:Supported a pac:CriterionStatus ; rdfs:label "Supported by evidence" .
+pac:NotFoundAfterDefinedSearch a pac:CriterionStatus ; rdfs:label "Not found after defined search" .
+pac:InsufficientEvidence a pac:CriterionStatus ; rdfs:label "Insufficient evidence" .
+pac:NotApplicable a pac:CriterionStatus ; rdfs:label "Not applicable" .
+
+### Evidence sufficiency is kept separate from the final decision
+pac:SufficientEvidence a pac:EvidenceSufficiency ; rdfs:label "Sufficient evidence" .
+pac:PartialEvidence a pac:EvidenceSufficiency ; rdfs:label "Partial evidence" .
+pac:InsufficientEvidenceOverall a pac:EvidenceSufficiency ; rdfs:label "Insufficient evidence overall" .
+
+### Decision vocabulary
+pac:GapDetected a pac:AssessmentDecision ; rdfs:label "One or more confirmed gaps detected" .
+pac:NoConfirmedGapWithinAssessedCriteria a pac:AssessmentDecision ; rdfs:label "No confirmed gap within assessed criteria" .
+pac:NotAssessed a pac:AssessmentDecision ; rdfs:label "Not assessed because evidence/search scope is insufficient" .
+
+### Gap taxonomy. Outcome is deliberately an evidence/monitoring gap, not a claim of policy failure.
+pac:DesignGap a pac:GapType ; rdfs:label "Design gap" .
+pac:ImplementationGap a pac:GapType ; rdfs:label "Implementation gap" .
+pac:CoverageGap a pac:GapType ; rdfs:label "Coverage gap" .
+pac:EquityGap a pac:GapType ; rdfs:label "Equity gap" .
+pac:OutcomeEvidenceGap a pac:GapType ; rdfs:label "Outcome-evidence / monitoring gap" .
+
+### Executable rule registry. The executable logic lives in rules/*.rq.
+pac:R00_InsufficientSearch a pac:RuleDefinition ; dcterms:identifier "R00" ; rdfs:seeAlso <../rules/R00_insufficient_search.rq> .
+pac:R01_DesignGap a pac:RuleDefinition ; dcterms:identifier "R01" ; rdfs:seeAlso <../rules/R01_design_gap.rq> .
+pac:R02_ImplementationGap a pac:RuleDefinition ; dcterms:identifier "R02" ; rdfs:seeAlso <../rules/R02_implementation_gap.rq> .
+pac:R03_CoverageGap a pac:RuleDefinition ; dcterms:identifier "R03" ; rdfs:seeAlso <../rules/R03_coverage_gap.rq> .
+pac:R04_EquityGap a pac:RuleDefinition ; dcterms:identifier "R04" ; rdfs:seeAlso <../rules/R04_equity_gap.rq> .
+pac:R05_OutcomeEvidenceGap a pac:RuleDefinition ; dcterms:identifier "R05" ; rdfs:seeAlso <../rules/R05_outcome_evidence_gap.rq> .
+pac:R06_GapDetected a pac:RuleDefinition ; dcterms:identifier "R06" ; rdfs:seeAlso <../rules/R06_gap_detected.rq> .
+pac:R07_NoConfirmedGap a pac:RuleDefinition ; dcterms:identifier "R07" ; rdfs:seeAlso <../rules/R07_no_confirmed_gap.rq> .

@@ -1,0 +1,2 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?assessment ?gapType ?rule ?criterionAssessment WHERE { ?assessment pac:hasGapFinding ?gap . ?gap pac:gapType ?gapType ; pac:appliedRule ?rule ; pac:triggeredByCriterionAssessment ?criterionAssessment . } ORDER BY ?assessment ?gapType

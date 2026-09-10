@@ -1,0 +1,33 @@
+@prefix pac: <https://w3id.org/chpg-o/pac#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+pac:AssessmentCaseShape a sh:NodeShape ;
+  sh:targetClass pac:AssessmentCase ;
+  sh:property [ sh:path pac:assessesProblem ; sh:minCount 1 ; sh:maxCount 1 ; sh:class pac:PolicyProblem ] ;
+  sh:property [ sh:path pac:hasSearchScope ; sh:minCount 1 ; sh:maxCount 1 ; sh:class pac:EvidenceSearchScope ] ;
+  sh:property [ sh:path pac:hasCriterionAssessment ; sh:minCount 1 ; sh:class pac:CriterionAssessment ] ;
+  sh:property [ sh:path pac:hasEvidenceSufficiency ; sh:minCount 1 ; sh:maxCount 1 ; sh:class pac:EvidenceSufficiency ] .
+
+pac:CriterionAssessmentShape a sh:NodeShape ;
+  sh:targetClass pac:CriterionAssessment ;
+  sh:property [ sh:path pac:assessesCriterion ; sh:minCount 1 ; sh:maxCount 1 ; sh:class pac:Criterion ] ;
+  sh:property [ sh:path pac:criterionStatus ; sh:minCount 1 ; sh:maxCount 1 ; sh:class pac:CriterionStatus ] .
+
+pac:EvidenceClaimShape a sh:NodeShape ;
+  sh:targetClass pac:EvidenceClaim ;
+  sh:property [ sh:path pac:extractedFrom ; sh:minCount 1 ; sh:class pac:SourceDocument ] ;
+  sh:property [ sh:path pac:concernsProblem ; sh:minCount 1 ; sh:class pac:PolicyProblem ] ;
+  sh:property [ sh:path pac:claimText ; sh:minCount 1 ; sh:datatype xsd:string ] .
+
+pac:SearchScopeShape a sh:NodeShape ;
+  sh:targetClass pac:EvidenceSearchScope ;
+  sh:property [ sh:path pac:scopeComplete ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:boolean ] ;
+  sh:property [ sh:path pac:searchProtocol ; sh:minCount 1 ; sh:datatype xsd:string ] ;
+  sh:property [ sh:path pac:includesSource ; sh:minCount 1 ; sh:class pac:SourceDocument ] .
+
+pac:GapFindingShape a sh:NodeShape ;
+  sh:targetClass pac:GapFinding ;
+  sh:property [ sh:path pac:gapType ; sh:minCount 1 ; sh:maxCount 1 ; sh:class pac:GapType ] ;
+  sh:property [ sh:path pac:triggeredByCriterionAssessment ; sh:minCount 1 ; sh:class pac:CriterionAssessment ] ;
+  sh:property [ sh:path pac:appliedRule ; sh:minCount 1 ; sh:class pac:RuleDefinition ] .

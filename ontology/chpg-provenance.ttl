@@ -1,0 +1,18 @@
+@prefix pac: <https://w3id.org/chpg-o/pac#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/chpg-o/provenance> a owl:Ontology ;
+  dcterms:title "CHPG-O provenance alignment" ;
+  dcterms:description "Execution provenance reuses PROV-O rather than embedding software workflow concepts in the domain ontology." ;
+  owl:imports <http://www.w3.org/ns/prov-o#>, <https://w3id.org/chpg-o/pac> .
+
+# Intended pattern:
+#   evidence claim      a prov:Entity
+#   assessment case     a prov:Entity
+#   rule execution      a prov:Activity
+#   rule definition     a prov:Plan
+#   rule execution      prov:used criterion assessment
+#   gap finding         prov:wasGeneratedBy rule execution
+# This module does not invent WorkflowRun/WorkflowStep domain classes.

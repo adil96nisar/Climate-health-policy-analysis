@@ -1,0 +1,17 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+CONSTRUCT {
+  ?assessment pac:hasGapFinding ?gap .
+  ?gap a pac:GapFinding ; pac:gapType pac:ImplementationGap ; pac:appliedRule pac:R02_ImplementationGap ;
+       pac:triggeredByCriterionAssessment ?ca ; pac:generatedByRuleExecution ?exec ; prov:wasGeneratedBy ?exec .
+  ?exec a pac:RuleExecution, prov:Activity ; pac:appliedRule pac:R02_ImplementationGap ; pac:usedCriterionAssessment ?ca ; prov:used ?ca .
+}
+WHERE {
+  ?assessment a pac:AssessmentCase ; pac:hasSearchScope ?scope ; pac:hasCriterionAssessment ?pr, ?ca .
+  ?scope pac:scopeComplete true .
+  ?pr pac:assessesCriterion pac:ProblemRecognitionCriterion ; pac:criterionStatus pac:Supported .
+  ?ca pac:assessesCriterion ?criterion ; pac:criterionStatus pac:NotFoundAfterDefinedSearch .
+  VALUES ?criterion { pac:ResponsibleActorCriterion pac:PolicyInstrumentCriterion pac:ImplementationPathwayCriterion pac:ResourceFinancingCriterion }
+  BIND(IRI(CONCAT(STR(?assessment), "/gap/implementation")) AS ?gap)
+  BIND(IRI(CONCAT(STR(?assessment), "/run/R02")) AS ?exec)
+}

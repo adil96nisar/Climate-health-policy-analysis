@@ -1,0 +1,9 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+CONSTRUCT {
+  ?assessment pac:assessmentDecision pac:NotAssessed ;
+              pac:decisionRule pac:R00_InsufficientSearch .
+}
+WHERE {
+  ?assessment a pac:AssessmentCase ; pac:hasSearchScope ?scope .
+  ?scope pac:scopeComplete false .
+}

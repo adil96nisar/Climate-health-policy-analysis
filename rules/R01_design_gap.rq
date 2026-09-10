@@ -1,0 +1,15 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+CONSTRUCT {
+  ?assessment pac:hasGapFinding ?gap .
+  ?gap a pac:GapFinding ; pac:gapType pac:DesignGap ; pac:appliedRule pac:R01_DesignGap ;
+       pac:triggeredByCriterionAssessment ?ca ; pac:generatedByRuleExecution ?exec ; prov:wasGeneratedBy ?exec .
+  ?exec a pac:RuleExecution, prov:Activity ; pac:appliedRule pac:R01_DesignGap ; pac:usedCriterionAssessment ?ca ; prov:used ?ca .
+}
+WHERE {
+  ?assessment a pac:AssessmentCase ; pac:hasSearchScope ?scope ; pac:hasCriterionAssessment ?ca .
+  ?scope pac:scopeComplete true .
+  ?ca pac:assessesCriterion pac:ProblemRecognitionCriterion ; pac:criterionStatus pac:NotFoundAfterDefinedSearch .
+  BIND(IRI(CONCAT(STR(?assessment), "/gap/design")) AS ?gap)
+  BIND(IRI(CONCAT(STR(?assessment), "/run/R01")) AS ?exec)
+}

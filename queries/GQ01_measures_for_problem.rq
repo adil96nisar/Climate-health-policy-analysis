@@ -1,0 +1,2 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?measure WHERE { ?measure a pac:PolicyMeasure ; pac:addressesProblem ?problem . } ORDER BY ?measure

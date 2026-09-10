@@ -1,0 +1,2 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?assessment ?criterion ?status WHERE { ?assessment a pac:AssessmentCase ; pac:hasCriterionAssessment ?ca . ?ca pac:assessesCriterion ?criterion ; pac:criterionStatus ?status . } ORDER BY ?assessment ?criterion

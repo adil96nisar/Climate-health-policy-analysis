@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use CHPG-O, please cite the accompanying paper."
+title: "CHPG-O: ontology-guided RDF knowledge graph framework for climate-health policy assessment"
+type: software
+authors:
+  - family-names: "Adil"
+    given-names: "Md Nisar Uddin"
+  - family-names: "Alam"
+    given-names: "A. M. Esfar E"
+version: "2.0.0"
+date-released: "2026-09-10"
+repository-code: "https://github.com/adil96nisar/Climate-health-policy-analysis"
+preferred-citation:
+  type: article
+  title: "Tracing Coherence and Gaps in Climate-Health Policy and News Evidence Through an Ontology-Guided RDF Knowledge Graph Framework"
+  authors:
+    - family-names: "Adil"
+      given-names: "Md Nisar Uddin"
+    - family-names: "Alam"
+      given-names: "A. M. Esfar E"
+  year: 2026

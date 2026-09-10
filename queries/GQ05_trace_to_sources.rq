@@ -1,0 +1,2 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?assessment ?criterion ?claim ?source WHERE { ?assessment pac:hasCriterionAssessment ?ca . ?ca pac:assessesCriterion ?criterion ; pac:supportedByClaim ?claim . ?claim pac:extractedFrom ?source . } ORDER BY ?assessment ?criterion ?source

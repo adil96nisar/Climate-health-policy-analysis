@@ -1,0 +1,2 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?assessment ?criterion WHERE { ?assessment pac:hasCriterionAssessment ?ca . ?ca pac:assessesCriterion ?criterion ; pac:criterionStatus pac:InsufficientEvidence . } ORDER BY ?assessment ?criterion

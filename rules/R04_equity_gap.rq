@@ -1,0 +1,15 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+CONSTRUCT {
+  ?assessment pac:hasGapFinding ?gap .
+  ?gap a pac:GapFinding ; pac:gapType pac:EquityGap ; pac:appliedRule pac:R04_EquityGap ;
+       pac:triggeredByCriterionAssessment ?ca ; pac:generatedByRuleExecution ?exec ; prov:wasGeneratedBy ?exec .
+  ?exec a pac:RuleExecution, prov:Activity ; pac:appliedRule pac:R04_EquityGap ; pac:usedCriterionAssessment ?ca ; prov:used ?ca .
+}
+WHERE {
+  ?assessment a pac:AssessmentCase ; pac:hasSearchScope ?scope ; pac:hasCriterionAssessment ?ca .
+  ?scope pac:scopeComplete true .
+  ?ca pac:assessesCriterion pac:EquityResponsivenessCriterion ; pac:criterionStatus pac:NotFoundAfterDefinedSearch .
+  BIND(IRI(CONCAT(STR(?assessment), "/gap/equity")) AS ?gap)
+  BIND(IRI(CONCAT(STR(?assessment), "/run/R04")) AS ?exec)
+}

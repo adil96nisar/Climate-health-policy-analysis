@@ -1,0 +1,3 @@
+PREFIX ex: <https://w3id.org/chpg-o/example/dengue#>
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?criterion WHERE { ex:Assessment_Dengue_Dhaka_2024 pac:hasCriterionAssessment ?ca . ?ca pac:assessesCriterion ?criterion ; pac:criterionStatus pac:InsufficientEvidence . }

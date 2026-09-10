@@ -1,0 +1,21 @@
+@prefix chpg: <https://w3id.org/chpg-o/ch#> .
+@prefix pac: <https://w3id.org/chpg-o/pac#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/chpg-o/ch/who-2023> a owl:Ontology ;
+  dcterms:title "WHO 2023 climate-resilient health-system component module" ;
+  owl:imports <https://w3id.org/chpg-o/ch> .
+
+chpg:C1_LeadershipGovernance a chpg:WHOComponent ; rdfs:label "C1 Climate-transformative leadership and governance" .
+chpg:C2_HealthWorkforce a chpg:WHOComponent ; rdfs:label "C2 Climate-smart health workforce" .
+chpg:C3_RiskAssessment a chpg:WHOComponent ; rdfs:label "C3 Assessment of climate and health risks and GHG emissions" .
+chpg:C4_IntegratedMonitoring a chpg:WHOComponent ; rdfs:label "C4 Integrated risks monitoring, early warning, and GHG emissions tracking" .
+chpg:C5_Research a chpg:WHOComponent ; rdfs:label "C5 Health and climate research" .
+chpg:C6_InfrastructureSupplyChain a chpg:WHOComponent ; rdfs:label "C6 Climate-resilient and low carbon infrastructures, technologies, and supply chain" .
+chpg:C7_EnvironmentalDeterminants a chpg:WHOComponent ; rdfs:label "C7 Management of environmental determinants of health" .
+chpg:C8_ClimateInformedProgrammes a chpg:WHOComponent ; rdfs:label "C8 Climate-informed health programmes" .
+chpg:C9_EmergencyPreparedness a chpg:WHOComponent ; rdfs:label "C9 Climate-related emergency preparedness and management" .
+chpg:C10_ClimateHealthFinancing a chpg:WHOComponent ; rdfs:label "C10 Sustainable climate and health financing" .

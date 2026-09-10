@@ -1,0 +1,43 @@
+@prefix chpg: <https://w3id.org/chpg-o/ch#> .
+@prefix pac: <https://w3id.org/chpg-o/pac#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/chpg-o/ch> a owl:Ontology ;
+  dcterms:title "CHPG-O climate-health extension" ;
+  owl:imports <https://w3id.org/chpg-o/pac> ;
+  owl:versionInfo "2.0.0-reviewer-ready" .
+
+### Climate-health-specific classes. None of these are required by the generic gap rules.
+chpg:NewsArticle a owl:Class ; rdfs:subClassOf pac:ObservationDocument .
+chpg:ClimateHazard a owl:Class .
+chpg:EnvironmentalDeterminant a owl:Class .
+chpg:HealthRisk a owl:Class ; rdfs:subClassOf pac:PolicyProblem .
+chpg:HealthOutcome a owl:Class .
+chpg:VulnerableGroup a owl:Class ; rdfs:subClassOf pac:PopulationGroup .
+chpg:GeographicArea a owl:Class ; rdfs:subClassOf pac:GeographicScope .
+chpg:WHOComponent a owl:Class ; rdfs:subClassOf pac:NormativeCriterion .
+chpg:MediaVisibleRiskProfile a owl:Class .
+
+chpg:reportsHazard a owl:ObjectProperty ; rdfs:domain pac:EvidenceClaim ; rdfs:range chpg:ClimateHazard .
+chpg:reportsHealthOutcome a owl:ObjectProperty ; rdfs:domain pac:EvidenceClaim ; rdfs:range chpg:HealthOutcome .
+chpg:hasMediaVisibleRiskProfile a owl:ObjectProperty ; rdfs:domain pac:AssessmentCase ; rdfs:range chpg:MediaVisibleRiskProfile .
+
+### Descriptive media-evidence indicators. They do not calculate policy gaps.
+chpg:repeatedReporting a owl:DatatypeProperty ; rdfs:domain chpg:MediaVisibleRiskProfile ; rdfs:range xsd:boolean .
+chpg:morbidityMortalityReported a owl:DatatypeProperty ; rdfs:domain chpg:MediaVisibleRiskProfile ; rdfs:range xsd:boolean .
+chpg:servicePressureReported a owl:DatatypeProperty ; rdfs:domain chpg:MediaVisibleRiskProfile ; rdfs:range xsd:boolean .
+chpg:climateEnvironmentalLinkReported a owl:DatatypeProperty ; rdfs:domain chpg:MediaVisibleRiskProfile ; rdfs:range xsd:boolean .
+chpg:vulnerableGroupReported a owl:DatatypeProperty ; rdfs:domain chpg:MediaVisibleRiskProfile ; rdfs:range xsd:boolean .
+chpg:geographicConcentrationReported a owl:DatatypeProperty ; rdfs:domain chpg:MediaVisibleRiskProfile ; rdfs:range xsd:boolean .
+
+### Representative domain individuals
+chpg:Dengue a chpg:HealthRisk ; rdfs:label "Dengue" .
+chpg:Dhaka a chpg:GeographicArea ; rdfs:label "Dhaka" .
+chpg:GeneralPopulation a pac:PopulationGroup ; rdfs:label "General population" .
+chpg:WomenChildrenAdolescents a chpg:VulnerableGroup ; rdfs:label "Women, children and adolescents" .
+chpg:HeavyRainfall a chpg:ClimateHazard ; rdfs:label "Heavy rainfall" .
+chpg:HighTemperature a chpg:ClimateHazard ; rdfs:label "High temperature" .

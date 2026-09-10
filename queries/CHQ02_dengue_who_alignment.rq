@@ -1,0 +1,3 @@
+PREFIX ex: <https://w3id.org/chpg-o/example/dengue#>
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?criterion WHERE { ex:Measure_HNAP_ClimateHealth pac:alignsWithNormativeCriterion ?criterion . } ORDER BY ?criterion

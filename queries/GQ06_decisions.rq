@@ -1,0 +1,2 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+SELECT ?assessment ?decision ?rule WHERE { ?assessment a pac:AssessmentCase ; pac:assessmentDecision ?decision ; pac:decisionRule ?rule . } ORDER BY ?assessment

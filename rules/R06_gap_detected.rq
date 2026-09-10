@@ -1,0 +1,5 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+CONSTRUCT {
+  ?assessment pac:assessmentDecision pac:GapDetected ; pac:decisionRule pac:R06_GapDetected .
+}
+WHERE { ?assessment a pac:AssessmentCase ; pac:hasGapFinding ?gap . }

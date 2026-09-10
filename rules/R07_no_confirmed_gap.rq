@@ -1,0 +1,10 @@
+PREFIX pac: <https://w3id.org/chpg-o/pac#>
+CONSTRUCT {
+  ?assessment pac:assessmentDecision pac:NoConfirmedGapWithinAssessedCriteria ; pac:decisionRule pac:R07_NoConfirmedGap .
+}
+WHERE {
+  ?assessment a pac:AssessmentCase ; pac:hasSearchScope ?scope ; pac:hasCriterionAssessment ?ca .
+  ?scope pac:scopeComplete true .
+  FILTER NOT EXISTS { ?assessment pac:hasGapFinding ?gap }
+  FILTER NOT EXISTS { ?assessment pac:assessmentDecision pac:NotAssessed }
+}

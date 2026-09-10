@@ -1,0 +1,3 @@
+PREFIX ex: <https://w3id.org/chpg-o/example/dengue#>
+PREFIX chpg: <https://w3id.org/chpg-o/ch#>
+SELECT ?repeated ?burden ?service ?climate ?vulnerable ?geo WHERE { ex:MediaProfile_Dengue2024 chpg:repeatedReporting ?repeated ; chpg:morbidityMortalityReported ?burden ; chpg:servicePressureReported ?service ; chpg:climateEnvironmentalLinkReported ?climate ; chpg:vulnerableGroupReported ?vulnerable ; chpg:geographicConcentrationReported ?geo . }
